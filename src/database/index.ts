@@ -5,7 +5,7 @@ export const connectToDatabase = async (mongoUrl: string) => {
     await mongoose.connect(mongoUrl);
     mongoose.set("debug", true);
     // Mensaje para cuando se ha conectado 🐼
-  } catch (error) {
+  } catch {
     // Mensaje para cuando no se ha conectado 🐇
   }
 };
