@@ -11,11 +11,11 @@ const robotsSchema = new Schema<RobotsStructure>({
     required: true,
   },
   velocity: {
-    type: String,
+    type: Number,
     required: true,
   },
   resistance: {
-    type: String,
+    type: Number,
     required: true,
   },
 });
