@@ -1,6 +1,5 @@
 {
   "env": {
-    "commonjs": true,
     "es2021": true,
     "node": true
   },
@@ -8,12 +7,19 @@
   "overrides": [
     {
       "extends": ["xo-typescript", "prettier"],
-      "files": ["*.ts", "*.tsx"],
+      "files": ["src/", "*.ts", "*.tsx"],
       "rules": {
+        "no-unused-vars": "error",
         "@typescript-eslint/consistent-type-definitions": [
           "error",
           "interface"
         ],
+        "no-implicit-coercion": "off"
+      }
+    },
+    {
+      "files": ["src/**/model/*.ts"],
+      "rules": {
         "@typescript-eslint/naming-convention": "off"
       }
     }
@@ -23,8 +29,6 @@
     "sourceType": "module"
   },
   "rules": {
-    "no-unused-vars": "error",
-    "no-implicit-coercion": "off",
     "new-cap": [
       "error",
       {
