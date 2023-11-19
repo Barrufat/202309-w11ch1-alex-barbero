@@ -7,7 +7,7 @@ import notFound from "../features/robots/middleware/errorMiddleware.js";
 import cors from "cors";
 
 const corsOptions = {
-  origin: "http://localhost:5173/",
+  origin: "https://two02309-w10chwe-back-mela-maluenda-alex.onrender.com/",
   credentials: true,
   optionSuccessStatus: 200,
 };
