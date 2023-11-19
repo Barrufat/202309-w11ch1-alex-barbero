@@ -1,9 +1,9 @@
 import "../../../../server/index";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import request from "supertest";
-import { connectToDatabase } from "../../../../database/index.js";
+import { connectToDatabase } from "../../../../database/index";
 import mongoose from "mongoose";
-import type { RobotsStructure } from "../../types";
+import type { RobotStructure } from "../../types";
 import { app } from "../../../../server/app";
 import robotsMock from "../../mock/robotsMock";
 
@@ -30,7 +30,7 @@ describe("Given GET /robots endpoint", () => {
         .get(robotsPath)
         .expect(expectedStatus);
 
-      const responseBody = response.body as { robots: RobotsStructure[] };
+      const responseBody = response.body as { robots: RobotStructure[] };
 
       responseBody.robots.forEach((robot, robotPosition) => {
         expect(robot).toHaveProperty("name", robotsMock[robotPosition].name);

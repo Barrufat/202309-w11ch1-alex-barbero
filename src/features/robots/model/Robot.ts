@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
-import { type RobotsStructure } from "../types";
+import { type RobotStructure } from "../types";
 
-const robotsSchema = new Schema<RobotsStructure>({
+const robotSchema = new Schema<RobotStructure>({
   name: {
     type: String,
     required: true,
@@ -20,6 +20,6 @@ const robotsSchema = new Schema<RobotsStructure>({
   },
 });
 
-const Robots = model("Robots", robotsSchema, "robots");
+const Robot = model("Robots", robotSchema, "robots");
 
-export default Robots;
+export default Robot;
