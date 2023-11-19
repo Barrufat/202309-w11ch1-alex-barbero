@@ -46,6 +46,9 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
+    "@types/cors": "^2.8.16",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
     "node": "v20.6.0"
   }
 }
