@@ -6,17 +6,11 @@ import robotRouter from "../features/robots/router/robotRouter.js";
 import notFound from "../features/robots/middleware/errorMiddleware.js";
 import cors from "cors";
 
-const corsOptions = {
-  origin: "http://localhost:5173/",
-  credentials: true,
-  optionSuccessStatus: 200,
-};
-
 app.use(express.json());
 
 app.use(morgan("dev"));
 
-app.use(cors(corsOptions));
+app.use(cors({ origin: "*" }));
 
 app.use("/", pingRouter);
 
