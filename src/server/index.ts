@@ -7,7 +7,9 @@ import notFound from "../features/robots/middleware/errorMiddleware.js";
 import cors from "cors";
 
 const corsOptions = {
-  origin: "trustedwebsite.com",
+  origin: "http://localhost:5173/",
+  credentials: true,
+  optionSuccessStatus: 200,
 };
 
 app.use(express.json());
