@@ -1,4 +1,4 @@
-import { type RobotStructure } from "../types";
+import { type RobotData, type RobotStructure } from "../types";
 
 const robotsMock: RobotStructure[] = [
   {
@@ -23,5 +23,12 @@ const robotsMock: RobotStructure[] = [
     resistance: 7,
   },
 ];
+
+export const newRobot: RobotData = {
+  name: "Testybot",
+  image: "https://th.bing.com/th/id/OIG.zR3Icqpo9VJjglYjKZo5?pid=ImgGn",
+  velocity: 2,
+  resistance: 3,
+};
 
 export default robotsMock;

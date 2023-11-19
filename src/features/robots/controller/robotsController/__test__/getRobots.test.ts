@@ -1,7 +1,7 @@
-import robotsMock from "../../mock/robotsMock";
-import type { RobotsRepository } from "../../types";
+import robotsMock from "../../../mock/robotsMock";
+import type { RobotsRepository } from "../../../types";
 import type { Request, Response } from "express";
-import RobotsController from "../robotsController/RobotsController";
+import RobotsController from "../RobotsController";
 
 beforeEach(() => {
   jest.restoreAllMocks();
