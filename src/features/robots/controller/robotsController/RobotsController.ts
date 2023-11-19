@@ -1,5 +1,6 @@
 import type RobotsMongooseRepository from "../../repository/RobotsMongooseRepository.js";
 import type { Request, Response } from "express";
+import { type CreateRobotRequest } from "../../types.js";
 
 class RobotsController {
   constructor(private readonly robotsRepository: RobotsMongooseRepository) {}
@@ -8,6 +9,19 @@ class RobotsController {
     const robots = await this.robotsRepository.getRobots();
 
     res.status(200).json({ robots });
+  };
+
+  public createRobot = async (
+    req: CreateRobotRequest,
+    res: Response,
+  ): Promise<void> => {
+    const robotData = req.body;
+    try {
+      const newRobot = await this.robotsRepository.createRobot(robotData);
+      res.status(201).json({ robot: newRobot });
+    } catch {
+      res.status(500).json({ error: "Creating a new robot was not possible" });
+    }
   };
 }
 
