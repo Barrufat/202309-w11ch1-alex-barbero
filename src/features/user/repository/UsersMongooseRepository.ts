@@ -1,9 +1,19 @@
-import User from "../model/User";
-import { type UserWithoutPassword, type UserDataStructure } from "../types";
+import User from "../model/User.js";
+import {
+  type UserWithoutPassword,
+  type UserDataStructure,
+  type UserStructure,
+} from "../types";
 import type UsersRepository from "./types";
 import bcrypt from "bcrypt";
 
 class UsersMongooseRepository implements UsersRepository {
+  public async getUsers(): Promise<UserStructure[]> {
+    const users = await User.find();
+
+    return users;
+  }
+
   async createUser(userData: UserDataStructure): Promise<UserWithoutPassword> {
     const newUser = await User.create(userData);
 
@@ -13,10 +23,10 @@ class UsersMongooseRepository implements UsersRepository {
   }
 
   async loginUser(
-    userName: string,
+    username: string,
     password: string,
   ): Promise<UserWithoutPassword> {
-    const currentUser = await User.findOne({ userName });
+    const currentUser = await User.findOne({ username });
 
     if (!currentUser) {
       throw new Error("User not found!");

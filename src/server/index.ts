@@ -16,4 +16,4 @@ app.use("/", pingRouter);
 
 app.use("/robots", robotRouter);
 
-app.use("/register", usersRouter);
+app.use("/users", usersRouter);
