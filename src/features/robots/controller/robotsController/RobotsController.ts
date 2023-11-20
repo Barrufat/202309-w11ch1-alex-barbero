@@ -16,6 +16,7 @@ class RobotsController {
     res: Response,
   ): Promise<void> => {
     const robotData = req.body;
+
     try {
       const newRobot = await this.robotsRepository.createRobot(robotData);
       res.status(201).json({ robot: newRobot });
