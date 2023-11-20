@@ -55,7 +55,7 @@ class UsersController {
 
       const token = jwt.sign(userData, "POTATOES");
 
-      res.status(201).json(token);
+      res.status(200).json(token);
     } catch (error) {
       res.status(400).json((error as Error).message);
     }
