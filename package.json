@@ -1,5 +1,5 @@
 {
-  "name": "202309-w11ch1alex-barbero",
+  "name": "202309-w10-back-mela-alex",
   "version": "1.0.0",
   "description": "Api Rest of robots",
   "type": "module",
@@ -46,9 +46,13 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.16",
+    "@types/jsonwebtoken": "^9.0.5",
+    "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
     "node": "v20.6.0"
   }
 }

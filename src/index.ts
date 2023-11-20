@@ -2,6 +2,7 @@ import chalk from "chalk";
 import { connectToDatabase } from "./database/index.js";
 import { startServer } from "./server/app.js";
 import "./server/index.js";
+import "./features/user/model/User.js";
 
 const port = process.env.PORT ?? 1914;
 
