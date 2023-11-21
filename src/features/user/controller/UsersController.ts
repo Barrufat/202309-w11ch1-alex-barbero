@@ -1,6 +1,6 @@
 import { type JwtPayload } from "jsonwebtoken";
 import jwt from "jsonwebtoken";
-
+import bcrypt from "bcrypt";
 import type UsersRepository from "../repository/types";
 import type { Request, Response } from "express";
 import { type UserDataStructure, type LoginRequestData } from "../types";
@@ -24,11 +24,16 @@ class UsersController {
   ) => {
     const userData = req.body;
 
+    const hashedPassword = await bcrypt.hash(userData.password, 10);
+
+    userData.password = hashedPassword;
+
     try {
       const newUser = await this.usersRepository.createUser(userData);
+
       res.status(201).json(newUser);
     } catch {
-      res.status(500).json({ error: "Impossible creating a new Robot" });
+      res.status(500).json({ error: "Impossible creating a new User" });
     }
   };
 
@@ -55,9 +60,9 @@ class UsersController {
 
       const token = jwt.sign(userData, "POTATOES");
 
-      res.status(200).json(token);
-    } catch (error) {
-      res.status(400).json((error as Error).message);
+      res.status(200).json({ token });
+    } catch {
+      res.status(401).json({ error: "Impossible creating a new User" });
     }
   };
 }
