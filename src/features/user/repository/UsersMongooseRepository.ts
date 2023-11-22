@@ -6,6 +6,10 @@ import {
 } from "../types";
 import type UsersRepository from "./types";
 import bcrypt from "bcrypt";
+import chalk from "chalk";
+import debugCreator from "debug";
+
+const debug = debugCreator("features:users:usersRepository");
 
 class UsersMongooseRepository implements UsersRepository {
   public async getUsers(): Promise<UserStructure[]> {
@@ -15,11 +19,16 @@ class UsersMongooseRepository implements UsersRepository {
   }
 
   async createUser(userData: UserDataStructure): Promise<UserWithoutPassword> {
-    const newUser = await User.create(userData);
+    try {
+      const newUser = await User.create(userData);
 
-    const { password, ...userWithoutPassword } = newUser.toJSON();
+      const { password, ...userWithoutPassword } = newUser.toJSON();
 
-    return userWithoutPassword;
+      return userWithoutPassword;
+    } catch (error) {
+      debug(chalk.red((error as Error).message));
+      throw new Error("There's was an error while creating the new User");
+    }
   }
 
   async loginUser(

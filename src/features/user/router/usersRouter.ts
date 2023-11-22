@@ -8,6 +8,7 @@ const usersRepository = new UsersMongooseRepository();
 const usersController = new UsersController(usersRepository);
 
 usersRouter.get("/", usersController.getUsers);
+usersRouter.post("/", usersController.registerUser);
 usersRouter.get("/login", usersController.loginUser);
 
 export default usersRouter;

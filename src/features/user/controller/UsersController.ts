@@ -2,8 +2,13 @@ import { type JwtPayload } from "jsonwebtoken";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import type UsersRepository from "../repository/types";
-import type { Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import { type UserDataStructure, type LoginRequestData } from "../types";
+import CustomError from "../../../CustomError/CustomError.js";
+import chalk from "chalk";
+import debugCreator from "debug";
+
+const debug = debugCreator("features:users:usersController");
 
 class UsersController {
   constructor(private readonly usersRepository: UsersRepository) {}
@@ -21,6 +26,7 @@ class UsersController {
       UserDataStructure
     >,
     res: Response,
+    next: NextFunction,
   ): Promise<void> => {
     const userData = req.body;
 
@@ -31,9 +37,17 @@ class UsersController {
     try {
       const newUser = await this.usersRepository.createUser(userData);
 
+      debug(chalk.green("New User succesfully registered!"));
       res.status(201).json(newUser);
     } catch (error) {
-      res.status(500).json({ error: (error as Error).message });
+      const customError = new CustomError(
+        "Impossible registering a new User",
+        500,
+        (error as Error).message,
+        "users:usersController:registerUser",
+      );
+
+      next(customError);
     }
   };
 
@@ -44,6 +58,7 @@ class UsersController {
       LoginRequestData
     >,
     res: Response,
+    next: NextFunction,
   ): Promise<void> => {
     const userCredencials = req.body;
 
@@ -61,8 +76,15 @@ class UsersController {
       const token = jwt.sign(userData, process.env.JWT_SECRET_KEY!);
 
       res.status(200).json({ token });
-    } catch {
-      res.status(401).json({ error: "Impossible creating a new User" });
+    } catch (error) {
+      const customError = new CustomError(
+        "It was not possible to login",
+        401,
+        (error as Error).message,
+        "robots:robotsController:loginUser",
+      );
+
+      next(customError);
     }
   };
 }

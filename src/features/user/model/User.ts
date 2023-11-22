@@ -10,7 +10,6 @@ const userSchema = new Schema<UserStructure>({
     type: String,
     required: true,
     minlength: 4,
-    unique: true,
   },
   password: {
     type: String,
