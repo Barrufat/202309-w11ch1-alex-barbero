@@ -21,7 +21,8 @@ const generalError = (
   const statusCode = error.statusCode ?? 500;
 
   debug(error.privateMessage);
-  res.status(statusCode).json({ error: error.message });
+
+  res.status(statusCode).json(error.message);
 };
 
 export default generalError;

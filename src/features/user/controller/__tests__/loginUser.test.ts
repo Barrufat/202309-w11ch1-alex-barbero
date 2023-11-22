@@ -1,9 +1,10 @@
 import jwt from "jsonwebtoken";
-import { type Response } from "express";
+import { type NextFunction, type Response } from "express";
 import { type LoginUserRequest } from "../../types";
 import type UsersRepository from "../../repository/types";
 import UsersController from "../UsersController";
 import { userMock } from "../../mocks/usersMock";
+import type CustomError from "../../../../CustomError/CustomError";
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -26,6 +27,8 @@ describe("Given a usersController's method loginUser", () => {
     json: jest.fn(),
   };
 
+  const next: NextFunction = jest.fn();
+
   describe("When it receives a response and a verificated username and password", () => {
     const usersRepository: Pick<UsersRepository, "loginUser"> = {
       loginUser: jest.fn().mockResolvedValue(userMock),
@@ -38,13 +41,21 @@ describe("Given a usersController's method loginUser", () => {
     test("Then it should call the method status with a 200", async () => {
       const expectedStatusCode = 200;
 
-      await usersController.loginUser(req as LoginUserRequest, res as Response);
+      await usersController.loginUser(
+        req as LoginUserRequest,
+        res as Response,
+        next,
+      );
 
       expect(res.status).toHaveBeenCalledWith(expectedStatusCode);
     });
 
     test("Then it should call the method status with a 200", async () => {
-      await usersController.loginUser(req as LoginUserRequest, res as Response);
+      await usersController.loginUser(
+        req as LoginUserRequest,
+        res as Response,
+        next,
+      );
 
       expect(res.json).toHaveBeenCalledWith({ token });
     });
@@ -52,6 +63,7 @@ describe("Given a usersController's method loginUser", () => {
 
   describe("When it receives a request with an invalidated password and username", () => {
     const expectedWrongStatusCode = 401;
+    const expectedErrorMessage = "It was not possible to login";
 
     const userRepository: Pick<UsersRepository, "loginUser"> = {
       loginUser: jest.fn().mockRejectedValue("error"),
@@ -61,17 +73,26 @@ describe("Given a usersController's method loginUser", () => {
     );
 
     test("Then it should call the status method of the response with status code 401", async () => {
-      await usersController.loginUser(req as LoginUserRequest, res as Response);
-
-      expect(res.status).toHaveBeenCalledWith(expectedWrongStatusCode);
+      await usersController.loginUser(
+        req as LoginUserRequest,
+        res as Response,
+        next,
+      );
     });
 
     test("Then it should call the json method of the response with an error message", async () => {
-      const expectedErrorMessage = { error: "Impossible creating a new User" };
+      await usersController.loginUser(
+        req as LoginUserRequest,
+        res as Response,
+        next,
+      );
 
-      await usersController.loginUser(req as LoginUserRequest, res as Response);
+      const expectedError: Partial<CustomError> = {
+        statusCode: expectedWrongStatusCode,
+        message: expectedErrorMessage,
+      };
 
-      expect(res.json).toHaveBeenCalledWith(expectedErrorMessage);
+      expect(next).toHaveBeenCalledWith(expect.objectContaining(expectedError));
     });
   });
 });
