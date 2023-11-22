@@ -41,6 +41,11 @@ describe("Given a usersController's method loginUser", () => {
       await usersController.loginUser(req as LoginUserRequest, res as Response);
 
       expect(res.status).toHaveBeenCalledWith(expectedStatusCode);
+    });
+
+    test("Then it should call the method status with a 200", async () => {
+      await usersController.loginUser(req as LoginUserRequest, res as Response);
+
       expect(res.json).toHaveBeenCalledWith({ token });
     });
   });
