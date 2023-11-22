@@ -4,6 +4,11 @@ import {
   type RobotData,
   type RobotStructure,
 } from "../types";
+import debugCreator from "debug";
+
+const debug = debugCreator(
+  "features:robots:repository:RobotsMongooseRepository",
+);
 
 class RobotsMongooseRepository implements RobotsRepository {
   public async getRobots(): Promise<RobotStructure[]> {
@@ -17,9 +22,8 @@ class RobotsMongooseRepository implements RobotsRepository {
       const createdRobot = await Robot.create(robot);
       return createdRobot;
     } catch (error) {
-      throw new Error(
-        "Creating a new robot was not possible: " + (error as Error).message,
-      );
+      debug((error as Error).message);
+      throw new Error("Creating a new robot was not possible: ");
     }
   }
 }
