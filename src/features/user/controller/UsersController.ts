@@ -21,7 +21,7 @@ class UsersController {
       UserDataStructure
     >,
     res: Response,
-  ) => {
+  ): Promise<void> => {
     const userData = req.body;
 
     const hashedPassword = await bcrypt.hash(userData.password, 10);
@@ -32,8 +32,8 @@ class UsersController {
       const newUser = await this.usersRepository.createUser(userData);
 
       res.status(201).json(newUser);
-    } catch {
-      res.status(500).json({ error: "Impossible creating a new User" });
+    } catch (error) {
+      res.status(500).json({ error: (error as Error).message });
     }
   };
 
@@ -44,7 +44,7 @@ class UsersController {
       LoginRequestData
     >,
     res: Response,
-  ) => {
+  ): Promise<void> => {
     const userCredencials = req.body;
 
     try {
@@ -58,7 +58,7 @@ class UsersController {
         name: currentUser.username,
       };
 
-      const token = jwt.sign(userData, "POTATOES");
+      const token = jwt.sign(userData, process.env.JWT_SECRET_KEY!);
 
       res.status(200).json({ token });
     } catch {
