@@ -1,4 +1,4 @@
-import { type Response } from "express";
+import { type NextFunction, type Response } from "express";
 import { newRobot } from "../../../mock/robotsMock";
 import { type RobotsRepository, type CreateRobotRequest } from "../../../types";
 import RobotsController from "../RobotsController";
@@ -18,6 +18,8 @@ describe("Given a robotsControllers's method createRobot", () => {
     json: jest.fn().mockReturnThis(),
   };
 
+  const next: NextFunction = jest.fn();
+
   describe("When it receives a response", () => {
     const robotsRepository: RobotsRepository = {
       getRobots: jest.fn(),
@@ -32,6 +34,7 @@ describe("Given a robotsControllers's method createRobot", () => {
       await robotsController.createRobot(
         req as CreateRobotRequest,
         res as Response,
+        next,
       );
 
       expect(res.status).toHaveBeenCalledWith(expectedStatusCode);
@@ -43,6 +46,7 @@ describe("Given a robotsControllers's method createRobot", () => {
       await robotsController.createRobot(
         req as CreateRobotRequest,
         res as Response,
+        next,
       );
 
       expect(res.json).toHaveBeenCalledWith({ robot: expectedRobot });
