@@ -3,7 +3,7 @@ class CustomError extends Error {
     message: string,
     public readonly statusCode: number,
     public readonly nameSpace: string,
-    public readonly privateMessage?: string,
+    public privateMessage?: string,
   ) {
     super(message);
   }
