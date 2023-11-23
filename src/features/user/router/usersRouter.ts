@@ -9,6 +9,6 @@ const usersController = new UsersController(usersRepository);
 
 usersRouter.get("/", usersController.getUsers);
 usersRouter.post("/", usersController.registerUser);
-usersRouter.get("/login", usersController.loginUser);
+usersRouter.post("/login", usersController.loginUser);
 
 export default usersRouter;
