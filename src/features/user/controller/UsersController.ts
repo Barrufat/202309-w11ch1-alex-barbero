@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import type UsersRepository from "../repository/types";
 import type { NextFunction, Request, Response } from "express";
 import { type UserDataStructure, type LoginRequestData } from "../types";
-import CustomError from "../../../CustomError/CustomError.js";
+import CustomError from "../../../server/CustomError/CustomError.js";
 import chalk from "chalk";
 import debugCreator from "debug";
 
@@ -44,7 +44,7 @@ class UsersController {
         "Impossible registering a new User",
         500,
         (error as Error).message,
-        "users:usersController:registerUser",
+        "features:users:usersController:registerUser",
       );
 
       next(customError);

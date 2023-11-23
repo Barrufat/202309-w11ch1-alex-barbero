@@ -1,7 +1,7 @@
 import type RobotsMongooseRepository from "../../repository/RobotsMongooseRepository.js";
 import type { NextFunction, Request, Response } from "express";
 import { type CreateRobotRequest } from "../../types.js";
-import CustomError from "../../../../CustomError/CustomError.js";
+import CustomError from "../../../../server/CustomError/CustomError.js";
 import chalk from "chalk";
 import debugCreator from "debug";
 

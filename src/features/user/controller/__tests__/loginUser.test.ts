@@ -4,7 +4,7 @@ import { type LoginUserRequest } from "../../types";
 import type UsersRepository from "../../repository/types";
 import UsersController from "../UsersController";
 import { userMock } from "../../mocks/usersMock";
-import type CustomError from "../../../../CustomError/CustomError";
+import type CustomError from "../../../../server/CustomError/CustomError";
 
 beforeEach(() => {
   jest.clearAllMocks();
